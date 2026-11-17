@@ -2,26 +2,26 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
 
-import { useListUsers } from "@/hooks/superadmin/users/useListUsers";
-import { useListRoles } from "@/hooks/superadmin/users/useListRoles";
+import { useListUsers } from "@/hooks/restaurant/superadmin/users/useListUsers";
+import { useListRoles } from "@/hooks/restaurant/superadmin/users/useListRoles";
 
-import { UsersHeader } from "@/components/superadmin/users/UsersHeader";
+import { UsersHeader } from "@/components/restaurant/superadmin/users/UsersHeader";
 import {
   UsersFilters,
   UsersFilterValues,
-} from "@/components/superadmin/users/UsersFilters";
-import { UsersTable } from "@/components/superadmin/users/UsersTable";
-import { UsersPagination } from "@/components/superadmin/users/UsersPagination";
-import { UserItemResponse } from "@/types/superadmin/users/listUsers";
+} from "@/components/restaurant/superadmin/users/UsersFilters";
+import { UsersTable } from "@/components/restaurant/superadmin/users/UsersTable";
+import { UsersPagination } from "@/components/restaurant/superadmin/users/UsersPagination";
+import { UserItemResponse } from "@/types/restaurant/superadmin/users/listUsers";
 import { useToast } from "@/ context/ToastContext";
-import { CreateUserModal } from "@/components/superadmin/modal/CreateUserModal";
-import { EditUserModal } from "@/components/superadmin/modal/EditUserModal";
-import { ChangeUserStatusModal } from "@/components/superadmin/modal/ChangeUserStatusModal";
-import { ManageUserRolesModal } from "@/components/superadmin/modal/ManageUserRolesModal";
-import { RolesManagementModal } from "@/components/superadmin/modal/RolesManagementModal";
+import { CreateUserModal } from "@/components/restaurant/superadmin/modal/CreateUserModal";
+import { EditUserModal } from "@/components/restaurant/superadmin/modal/EditUserModal";
+import { ChangeUserStatusModal } from "@/components/restaurant/superadmin/modal/ChangeUserStatusModal";
+import { ManageUserRolesModal } from "@/components/restaurant/superadmin/modal/ManageUserRolesModal";
+import { RolesManagementModal } from "@/components/restaurant/superadmin/modal/RolesManagementModal";
 
 const PAGE_SIZE = 10;
 

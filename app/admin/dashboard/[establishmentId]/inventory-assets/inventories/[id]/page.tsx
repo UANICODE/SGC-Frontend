@@ -15,12 +15,12 @@ import {
     RefreshCw,
     Timer
 } from "lucide-react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { useInventory } from "@/hooks/admin/inventory/useInventory";
-import { useCountInventory } from "@/hooks/admin/inventory/useCountInventory";
-import { useJustifyInventory } from "@/hooks/admin/inventory/useJustifyInventory";
-import { useApproveInventory } from "@/hooks/admin/inventory/useApproveInventory";
+import { useInventory } from "@/hooks/restaurant/admin/inventory/useInventory";
+import { useCountInventory } from "@/hooks/restaurant/admin/inventory/useCountInventory";
+import { useJustifyInventory } from "@/hooks/restaurant/admin/inventory/useJustifyInventory";
+import { useApproveInventory } from "@/hooks/restaurant/admin/inventory/useApproveInventory";
 import { useToast } from "@/ context/ToastContext";
 
 export default function InventoryDetailPage() {

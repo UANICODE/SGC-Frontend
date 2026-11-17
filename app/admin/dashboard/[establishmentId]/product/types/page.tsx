@@ -2,13 +2,13 @@
 
 import { useParams } from "next/navigation";
 import { useState, useMemo } from "react";
-import { useProductTypes } from "@/hooks/admin/product/types/useProductTypes";
-import { ProductTypesTable } from "@/components/admin/tables/ProductTypesTable";
-import { ProductTypeModal } from "@/components/admin/modals/ProductTypeModal";
-import { ProductTypeResponse } from "@/types/admin/product-types";
+import { useProductTypes } from "@/hooks/restaurant/admin/product/types/useProductTypes";
+import { ProductTypesTable } from "@/components/restaurant/admin/tables/ProductTypesTable";
+import { ProductTypeModal } from "@/components/restaurant/admin/modals/ProductTypeModal";
+import { ProductTypeResponse } from "@/types/restaurant/admin/product-types";
 import { useToast } from "@/ context/ToastContext";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { Plus, Package, Sparkles, Search, X, Layers } from "lucide-react";
 import { div } from "framer-motion/client";
 

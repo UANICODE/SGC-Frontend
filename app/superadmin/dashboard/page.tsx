@@ -1,7 +1,7 @@
 // app/superadmin/dashboard/page.tsx
 "use client";
 
-import { useSuperAdminDashboard } from "@/hooks/superadmin/useSuperAdminDashboard";
+import { useSuperAdminDashboard } from "@/hooks/restaurant/superadmin/useSuperAdminDashboard";
 import { 
   Building2, 
   Users, 
@@ -19,8 +19,8 @@ import {
   Clock
 } from "lucide-react";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
-import { KpiCard } from "@/components/admin/cards/KpiCard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
+import { KpiCard } from "@/components/restaurant/admin/cards/KpiCard";
 import { useMemo } from "react";
 
 export default function SuperAdminDashboardPage() {

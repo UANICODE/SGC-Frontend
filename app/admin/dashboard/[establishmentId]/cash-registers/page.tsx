@@ -1,33 +1,64 @@
 // app/admin/dashboard/[establishmentId]/cash-registers/page.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useOpenCashRegisters } from "@/hooks/admin/cash-register/useOpenCashRegisters";
-import { useCashRegisterSales } from "@/hooks/admin/cash-register/useCashRegisterSales";
-import { CashRegisterCard } from "@/components/admin/cards/CashRegisterCard";
-import { CashRegisterSalesModal } from "@/components/admin/modals/CashRegisterSalesModal";
-import { CashRegisterExpensesModal } from "@/components/admin/modals/CashRegisterExpensesModal"; // 🆕
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
+import { useOpenCashRegisters } from "@/hooks/restaurant/admin/cash-register/useOpenCashRegisters";
+import { useCashRegisterSales } from "@/hooks/restaurant/admin/cash-register/useCashRegisterSales";
+import { CashRegisterCard } from "@/components/restaurant/admin/cards/CashRegisterCard";
+import { CashRegisterSalesModal } from "@/components/restaurant/admin/modals/CashRegisterSalesModal";
+import { CashRegisterExpensesModal } from "@/components/restaurant/admin/modals/CashRegisterExpensesModal";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
 import { ChevronLeft, ChevronRight, Package } from "lucide-react";
 
 export default function CashRegistersPage() {
   const { establishmentId } = useParams<{ establishmentId: string }>();
   const { data: establishment } = useEstablishment(establishmentId);
 
-  const { data, loading } = useOpenCashRegisters(establishmentId);
-  const { data: sales, fetch, loading: loadingSales, error } =
-    useCashRegisterSales();
+  const { data, loading, refresh } = useOpenCashRegisters(establishmentId);
+  const {
+    data: sales,
+    fetch,
+    loading: loadingSales,
+    error,
+  } = useCashRegisterSales();
 
   const [selectedCash, setSelectedCash] = useState<string | null>(null);
   const [selectedCashInfo, setSelectedCashInfo] = useState<any>(null);
-  const [selectedCashForExpenses, setSelectedCashForExpenses] = useState<string | null>(null); // 🆕
+  const [selectedCashForExpenses, setSelectedCashForExpenses] = useState<
+    string | null
+  >(null);
 
   const [tab, setTab] = useState<"open" | "closed">("open");
   const [search, setSearch] = useState("");
   const [date, setDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  // 🆕 Polling 15s enquanto a página está visível
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        refresh();
+        if (selectedCash) {
+          fetch(establishmentId, selectedCash);
+        }
+      }
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [refresh, fetch, establishmentId, selectedCash]);
+
+  // 🆕 Refresh ao voltar ao browser
+  useEffect(() => {
+    const handleFocus = () => {
+      refresh();
+      if (selectedCash) {
+        fetch(establishmentId, selectedCash);
+      }
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [refresh, fetch, establishmentId, selectedCash]);
 
   const openRegisters = useMemo(
     () => data.filter((c) => c.status === "ABERTO"),
@@ -57,7 +88,6 @@ export default function CashRegistersPage() {
     await fetch(establishmentId, cash.cashRegisterId);
   };
 
-  // 🆕 Função para abrir modal de despesas
   const handleViewExpenses = (cashId: string) => {
     setSelectedCashForExpenses(cashId);
   };
@@ -109,7 +139,6 @@ export default function CashRegistersPage() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-white/30 via-white/50 to-white/30"></div>
       </div>
 
       {/* Tabs */}
@@ -129,7 +158,6 @@ export default function CashRegistersPage() {
             </span>
           )}
         </button>
-
         <button
           onClick={() => handleTabChange("closed")}
           className={`px-6 py-2.5 rounded-xl font-medium transition-all duration-300 ${
@@ -147,7 +175,7 @@ export default function CashRegistersPage() {
         </button>
       </div>
 
-      {/* Filtros para caixas fechados */}
+      {/* Filtros */}
       {tab === "closed" && (
         <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-5 shadow-sm">
           <div className="flex flex-wrap gap-4">
@@ -182,7 +210,7 @@ export default function CashRegistersPage() {
         </div>
       )}
 
-      {/* LISTA COM PAGINAÇÃO */}
+      {/* Lista */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl shadow-lg">
           <div className="relative">
@@ -201,14 +229,9 @@ export default function CashRegistersPage() {
                 <Package className="w-10 h-10 text-gray-400" />
               </div>
               <p className="text-gray-500 font-medium">
-                {tab === "open" 
-                  ? "Nenhum caixa aberto no momento" 
+                {tab === "open"
+                  ? "Nenhum caixa aberto no momento"
                   : "Nenhum caixa fechado encontrado"}
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                {tab === "closed" && (search || date) 
-                  ? "Tente ajustar os filtros" 
-                  : "Os caixas aparecerão aqui quando houver registros"}
               </p>
             </div>
           ) : (
@@ -219,12 +242,11 @@ export default function CashRegistersPage() {
                     key={cash.cashRegisterId}
                     cash={cash}
                     onDetails={handleDetails}
-                    onViewExpenses={handleViewExpenses} // 🆕 PASSAR FUNÇÃO
+                    onViewExpenses={handleViewExpenses}
                   />
                 ))}
               </div>
 
-              {/* Paginação */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center gap-2 mt-8 pt-4">
                   <button
@@ -238,49 +260,77 @@ export default function CashRegistersPage() {
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-
                   <div className="flex gap-1">
-                    {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                      let pageNum;
-                      if (totalPages <= 5) {
-                        pageNum = i + 1;
-                      } else if (currentPage <= 3) {
-                        pageNum = i + 1;
-                        if (i === 4) pageNum = totalPages;
-                      } else if (currentPage >= totalPages - 2) {
-                        pageNum = totalPages - 4 + i;
-                      } else {
-                        pageNum = currentPage - 2 + i;
+                    {Array.from(
+                      { length: Math.min(totalPages, 5) },
+                      (_, i) => {
+                        let pageNum;
+                        if (totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                          if (i === 4) pageNum = totalPages;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        if (pageNum === undefined) return null;
+                        if (i === 3 && totalPages > 5 && currentPage <= 3) {
+                          return (
+                            <span
+                              key="dots1"
+                              className="w-10 h-10 flex items-center justify-center text-gray-400"
+                            >
+                              ...
+                            </span>
+                          );
+                        }
+                        if (
+                          i === 1 &&
+                          totalPages > 5 &&
+                          currentPage >= totalPages - 2
+                        ) {
+                          return (
+                            <span
+                              key="dots2"
+                              className="w-10 h-10 flex items-center justify-center text-gray-400"
+                            >
+                              ...
+                            </span>
+                          );
+                        }
+                        if (
+                          i === 2 &&
+                          totalPages > 5 &&
+                          currentPage > 3 &&
+                          currentPage < totalPages - 2
+                        ) {
+                          return (
+                            <span
+                              key="dots3"
+                              className="w-10 h-10 flex items-center justify-center text-gray-400"
+                            >
+                              ...
+                            </span>
+                          );
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => handlePageChange(pageNum)}
+                            className={`w-10 h-10 rounded-lg font-medium transition-all duration-300 ${
+                              currentPage === pageNum
+                                ? "bg-gradient-to-r from-primary to-secondary text-white shadow-md scale-105"
+                                : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
                       }
-
-                      if (pageNum === undefined) return null;
-
-                      if (i === 3 && totalPages > 5 && currentPage <= 3) {
-                        return <span key="dots1" className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>;
-                      }
-                      if (i === 1 && totalPages > 5 && currentPage >= totalPages - 2) {
-                        return <span key="dots2" className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>;
-                      }
-                      if (i === 2 && totalPages > 5 && currentPage > 3 && currentPage < totalPages - 2) {
-                        return <span key="dots3" className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>;
-                      }
-
-                      return (
-                        <button
-                          key={pageNum}
-                          onClick={() => handlePageChange(pageNum)}
-                          className={`w-10 h-10 rounded-lg font-medium transition-all duration-300 ${
-                            currentPage === pageNum
-                              ? "bg-gradient-to-r from-primary to-secondary text-white shadow-md scale-105"
-                              : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
-                          }`}
-                        >
-                          {pageNum}
-                        </button>
-                      );
-                    })}
+                    )}
                   </div>
-
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
@@ -294,17 +344,16 @@ export default function CashRegistersPage() {
                   </button>
                 </div>
               )}
-
-              {/* Info de registros */}
               <div className="text-center text-sm text-gray-400 mt-4">
-                Mostrando {((currentPage - 1) * itemsPerPage) + 1} a {Math.min(currentPage * itemsPerPage, totalItems)} de {totalItems} caixas
+                Mostrando {(currentPage - 1) * itemsPerPage + 1} a{" "}
+                {Math.min(currentPage * itemsPerPage, totalItems)} de{" "}
+                {totalItems} caixas
               </div>
             </>
           )}
         </>
       )}
 
-      {/* ERRO */}
       {error && (
         <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl shadow-lg">
           <div className="flex items-center gap-3">
@@ -316,7 +365,6 @@ export default function CashRegistersPage() {
         </div>
       )}
 
-      {/* MODAL VENDAS */}
       <CashRegisterSalesModal
         open={!!selectedCash}
         onClose={() => {
@@ -332,7 +380,6 @@ export default function CashRegistersPage() {
         cashRegisterInfo={selectedCashInfo}
       />
 
-      {/* 🆕 MODAL DESPESAS */}
       <CashRegisterExpensesModal
         open={!!selectedCashForExpenses}
         cashRegisterId={selectedCashForExpenses || ""}

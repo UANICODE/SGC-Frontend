@@ -1,16 +1,16 @@
 "use client";
 
 import { useToast } from "@/ context/ToastContext";
-import { DeleteSupplierModal } from "@/components/admin/modals/DeleteSupplierModal";
-import { SupplierFormModal } from "@/components/admin/modals/SupplierFormModal";
-import { SupplierTable } from "@/components/admin/tables/SupplierTable";
-import { useSuppliers } from "@/hooks/admin/supplier/useSuppliers";
-import { changeSupplierStatus } from "@/service/admin/supplier";
-import { SupplierItemResponse } from "@/types/admin/supplier";
+import { DeleteSupplierModal } from "@/components/restaurant/admin/modals/DeleteSupplierModal";
+import { SupplierFormModal } from "@/components/restaurant/admin/modals/SupplierFormModal";
+import { SupplierTable } from "@/components/restaurant/admin/tables/SupplierTable";
+import { useSuppliers } from "@/hooks/restaurant/admin/supplier/useSuppliers";
+import { changeSupplierStatus } from "@/service/restaurant/admin/supplier";
+import { SupplierItemResponse } from "@/types/restaurant/admin/supplier";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 
 export default function SuppliersPage() {

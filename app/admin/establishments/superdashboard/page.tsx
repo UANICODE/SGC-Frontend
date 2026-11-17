@@ -1,10 +1,10 @@
 "use client";
 
-import { SalesChart } from "@/components/admin/SalesChart";
-import { SuperProductSearch } from "@/components/admin/SuperProductSearch";
+import { SalesChart } from "@/components/restaurant/admin/SalesChart";
+import { SuperProductSearch } from "@/components/restaurant/admin/SuperProductSearch";
 import { DashboardFooter } from "@/components/ui/DashboardFooter";
-import { useSuperDashboard } from "@/hooks/admin/useSuperDashboard";
-import { useSuperSales } from "@/hooks/admin/useSuperSales";
+import { useSuperDashboard } from "@/hooks/restaurant/admin/useSuperDashboard";
+import { useSuperSales } from "@/hooks/restaurant/admin/useSuperSales";
 import { Package, DollarSign, Store, AlertTriangle, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 

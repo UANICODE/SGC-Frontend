@@ -3,11 +3,11 @@
 
 import { useParams } from "next/navigation";
 import { Package } from "lucide-react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
-import { useInventoryAssetDashboard } from "@/hooks/admin/inventory/useInventoryDashboard";
-import { InventoryAssetDashboard } from "@/components/admin/InventoryAssetDashboard";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
+import { useInventoryAssetDashboard } from "@/hooks/restaurant/admin/inventory/useInventoryDashboard";
+import { InventoryAssetDashboard } from "@/components/restaurant/admin/InventoryAssetDashboard";
 
 
 export default function InventoryAssetsPage() {

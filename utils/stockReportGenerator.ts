@@ -1,5 +1,5 @@
 // utils/reports/stockReportGenerator.ts
-import { InventoryReportResponse } from "@/types/admin/report.types";
+import { InventoryReportResponse } from "@/types/restaurant/admin/report.types";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 

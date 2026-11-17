@@ -1,10 +1,9 @@
 
 "use client";
 
-import { CardEstablishment } from "@/components/admin/cards/CardEstablishment";
+import { CardEstablishment } from "@/components/restaurant/admin/cards/CardEstablishment";
 import { UserRole } from "@/enum/enum";
-import { useAdminEstablishments } from "@/hooks/admin/useAdminEstablishments";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useAdminEstablishments } from "@/hooks/restaurant/admin/useAdminEstablishments";
 import { useRouter } from "next/navigation";
 
 import {
@@ -19,6 +18,7 @@ import {
 } from "lucide-react";
 
 import { useEffect, useRef, useState } from "react";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 export default function EstablishmentsPage() {
   useRoleGuard([UserRole.ADMIN]);

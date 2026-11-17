@@ -6,9 +6,9 @@ import {
     InventoriesReportItem,
     CostsReportItem,
     PurchaseReportResponse,
-} from "@/types/admin/report";
-import { ExportDataResponse, MonthlyExpenseGroup } from "@/types/admin/cost";
-import { InventoryReportResponse } from "@/types/admin/report.types";
+} from "@/types/restaurant/admin/report";
+import { ExportDataResponse, MonthlyExpenseGroup } from "@/types/restaurant/admin/cost";
+import { InventoryReportResponse } from "@/types/restaurant/admin/report.types";
 
 // ============================================================
 // TIPOS

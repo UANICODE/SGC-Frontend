@@ -4,11 +4,11 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { PageLoader } from "@/components/ui/PageLoader";
-import { useArchivedSales } from "@/hooks/attendant/useArchivedSales";
-import { useSale } from "@/hooks/attendant/useSale";
-import { useAssignSale } from "@/hooks/attendant/useAssignSale";
-import { AssignModal } from "@/components/attendant/modals/AssignModal";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
+import { useArchivedSales } from "@/hooks/restaurant/attendant/useArchivedSales";
+import { useSale } from "@/hooks/restaurant/attendant/useSale";
+import { useAssignSale } from "@/hooks/restaurant/attendant/useAssignSale";
+import { AssignModal } from "@/components/restaurant/attendant/modals/AssignModal";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
 
 import {
   ArrowPathIcon,
@@ -30,10 +30,10 @@ import {
   UserIcon, // 🔥 NOVO
 } from "@heroicons/react/24/outline";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { useToast } from "@/ context/ToastContext";
-import { useTables } from "@/hooks/admin/useTables";
-import { useWaiters } from "@/hooks/admin/useWaiters";
+import { useTables } from "@/hooks/restaurant/admin/useTables";
+import { useWaiters } from "@/hooks/restaurant/admin/useWaiters";
 
 interface ArchivedSale {
   saleId: string;

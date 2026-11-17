@@ -1,12 +1,13 @@
 "use client";
 
-import { AttendantSidebar } from "@/components/attendant/layout/AttendantSidebar";
-import { AttendantNavbar } from "@/components/attendant/layout/AttendantNavbar";
+import { AttendantSidebar } from "@/components/restaurant/attendant/layout/AttendantSidebar";
+import { AttendantNavbar } from "@/components/restaurant/attendant/layout/AttendantNavbar";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { useRouter, useParams } from "next/navigation";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
 import { EstablishmentBlockProvider } from "@/providers/EstablishmentBlockProvider";
 import { DashboardFooter } from "@/components/ui/DashboardFooter";
+import { HotelModeProvider } from "@/providers/HotelModeProvider";
 
 export default function AttendantLayout({
   children,
@@ -29,6 +30,7 @@ export default function AttendantLayout({
 
   return (
      <EstablishmentBlockProvider>
+       <HotelModeProvider businessTypeCode={data?.businessTypeCode ?? null}>
   <div className="min-h-screen flex bg-gray-50">
   {/* Sidebar fixa */}
   <AttendantSidebar
@@ -57,6 +59,7 @@ export default function AttendantLayout({
                  <DashboardFooter version="v1.0.3" />
   </div>
 </div>
+</HotelModeProvider>
     </EstablishmentBlockProvider>
   );
 }

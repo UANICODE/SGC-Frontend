@@ -14,23 +14,23 @@ import {
     TrendingUp
 } from "lucide-react";
 
-import { ProductStockTable } from "@/components/admin/tables/ProductStockTable";
-import { RemoveStockModal } from "@/components/admin/modals/RemoveStockModal";
-import { CartButton } from "@/components/admin/CartButton";
-import { CartModal } from "@/components/admin/modals/CartModal";
-import { DropdownMenu } from "@/components/admin/DropdownMenu";
-import { useProductStocks } from "@/hooks/admin/product/stock/useProductStocks";
-import { useCart } from "@/hooks/admin/purchase/useCart";
+import { ProductStockTable } from "@/components/restaurant/admin/tables/ProductStockTable";
+import { RemoveStockModal } from "@/components/restaurant/admin/modals/RemoveStockModal";
+import { CartButton } from "@/components/restaurant/admin/CartButton";
+import { CartModal } from "@/components/restaurant/admin/modals/CartModal";
+import { DropdownMenu } from "@/components/restaurant/admin/DropdownMenu";
+import { useProductStocks } from "@/hooks/restaurant/admin/product/stock/useProductStocks";
+import { useCart } from "@/hooks/restaurant/admin/purchase/useCart";
 import { useToast } from "@/ context/ToastContext";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
-import { useStockMovements } from "@/hooks/admin/product/stock/useStockMovements";
-import { StockMovementsModal } from "@/components/admin/modals/StockMovementsModal";
-import { TransferStockModal } from "@/components/admin/modals/TransferStockModal";
-import { ReportFilterModal } from "@/components/admin/modals/ReportFilterModal";
-import { usePurchasesReport } from "@/hooks/report/usePurchasesReport";
-import { useSuppliers } from "@/hooks/admin/supplier/useSuppliers";
-import { useEstablishment } from "@/hooks/admin/useEstablishment"; // 🆕
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
+import { useStockMovements } from "@/hooks/restaurant/admin/product/stock/useStockMovements";
+import { StockMovementsModal } from "@/components/restaurant/admin/modals/StockMovementsModal";
+import { TransferStockModal } from "@/components/restaurant/admin/modals/TransferStockModal";
+import { ReportFilterModal } from "@/components/restaurant/admin/modals/ReportFilterModal";
+import { usePurchasesReport } from "@/hooks/restaurant/report/usePurchasesReport";
+import { useSuppliers } from "@/hooks/restaurant/admin/supplier/useSuppliers";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment"; // 🆕
 import { generatePurchasesPDF } from "@/utils/pdfGenerator";
 
 export default function ProductStockPage() {

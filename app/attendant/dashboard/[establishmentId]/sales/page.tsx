@@ -2,23 +2,23 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import { useSale } from "@/hooks/attendant/useSale";
-import { usePaymentMethods } from "@/hooks/attendant/usePaymentMethods";
-import { ProductItem } from "@/types/attendant/sale/Product";
-import { SaleItem } from "@/types/attendant/sale/Sale";
-import { listProducts } from "@/service/attendant/product";
-import { Receipt } from "@/types/attendant/sale/Receipt";
-import { PaymentModal } from "@/components/attendant/modals/PaymentModal";
-import { ReceiptPreview } from "@/components/attendant/ReceiptPreview";
+import { useSale } from "@/hooks/restaurant/attendant/useSale";
+import { usePaymentMethods } from "@/hooks/restaurant/attendant/usePaymentMethods";
+import { ProductItem } from "@/types/restaurant/attendant/sale/Product";
+import { SaleItem } from "@/types/restaurant/attendant/sale/Sale";
+import { listProducts } from "@/service/restaurant/attendant/product";
+import { Receipt } from "@/types/restaurant/attendant/sale/Receipt";
+import { PaymentModal } from "@/components/restaurant/attendant/modals/PaymentModal";
+import { ReceiptPreview } from "@/components/restaurant/attendant/ReceiptPreview";
 import { useToast } from "@/ context/ToastContext";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 import { PlusIcon, CheckCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { Minus, Plus, ShoppingCart, Scale, PrinterIcon, ChevronDown, ChevronRight } from "lucide-react";
-import { WeightProductModal } from "@/components/attendant/modals/WeightProductModal";
-import { finalizeSale } from "@/service/attendant/sale";
-import { KitchenReceiptPreview } from "@/components/attendant/KitchenReceiptPreview";
+import { WeightProductModal } from "@/components/restaurant/attendant/modals/WeightProductModal";
+import { finalizeSale } from "@/service/restaurant/attendant/sale";
+import { KitchenReceiptPreview } from "@/components/restaurant/attendant/KitchenReceiptPreview";
 
 export default function SalesPage() {
   useRoleGuard([UserRole.ATENDENTE]);

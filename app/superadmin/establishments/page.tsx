@@ -15,21 +15,22 @@ import {
 } from "lucide-react";
 
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { useToast } from "@/ context/ToastContext";
 
-import { useListEstablishments } from "@/hooks/superadmin/establishments/useListEstablishments";
-import { useListBusinessTypes } from "@/hooks/superadmin/establishments/useListBusinessTypes";
+import { useListEstablishments } from "@/hooks/restaurant/superadmin/establishments/useListEstablishments";
+import { useListBusinessTypes } from "@/hooks/restaurant/superadmin/establishments/useListBusinessTypes";
 
-import { EstablishmentCard } from "@/components/superadmin/cards/EstablishmentCard";
+import { EstablishmentCard } from "@/components/restaurant/superadmin/cards/EstablishmentCard";
 
-import { CreateEstablishmentModal } from "@/components/superadmin/modal/CreateEstablishmentModal";
-import { EstablishmentFilters, EstablishmentFilterValues } from "@/components/superadmin/establishments/EstablishmentFilters";
-import { EstablishmentsPagination } from "@/components/superadmin/establishments/EstablishmentsPagination";
-import { EstablishmentListItemResponse } from "@/types/superadmin/establishments/listEstablishments";
-import { EditEstablishmentModal } from "@/components/superadmin/modal/EditEstablishmentModal";
-import { GlobalCashRegistersModal } from "@/components/superadmin/modal/GlobalCashRegistersModal";
-import { ManageAdministratorsModal } from "@/components/superadmin/modal/ManageAdministratorsModal";
+import { CreateEstablishmentModal } from "@/components/restaurant/superadmin/modal/CreateEstablishmentModal";
+import { EstablishmentFilters, EstablishmentFilterValues } from "@/components/restaurant/superadmin/establishments/EstablishmentFilters";
+import { EstablishmentsPagination } from "@/components/restaurant/superadmin/establishments/EstablishmentsPagination";
+import { EstablishmentListItemResponse } from "@/types/restaurant/superadmin/establishments/listEstablishments";
+import { EditEstablishmentModal } from "@/components/restaurant/superadmin/modal/EditEstablishmentModal";
+import { GlobalCashRegistersModal } from "@/components/restaurant/superadmin/modal/GlobalCashRegistersModal";
+import { ManageAdministratorsModal } from "@/components/restaurant/superadmin/modal/ManageAdministratorsModal";
+import { useRouter } from "next/navigation"; // 👈 IMPORTANTE
 
 const PAGE_SIZE = 12;
 
@@ -41,6 +42,8 @@ const emptyFilters: EstablishmentFilterValues = {
 
 export default function ListEstablishmentsPage() {
   useRoleGuard([UserRole.SUPERADMIN]);
+  
+  const router = useRouter(); // 👈 INICIALIZAR
 
   const { showToast } = useToast();
 
@@ -51,110 +54,87 @@ export default function ListEstablishmentsPage() {
   } = useListEstablishments();
 
   const [
-  administratorEstablishment,
-  setAdministratorEstablishment,
-] =
-  useState<EstablishmentListItemResponse | null>(
-    null
-  );
+    administratorEstablishment,
+    setAdministratorEstablishment,
+  ] = useState<EstablishmentListItemResponse | null>(null);
 
   const {
     data: businessTypes,
     loading: businessTypesLoading,
     execute: loadBusinessTypes,
   } = useListBusinessTypes();
-  const [
-  cashRegistersOpen,
-  setCashRegistersOpen,
-] = useState(false);
-
-    const [
-      selectedCashRegisterEstablishment,
-      setSelectedCashRegisterEstablishment,
-    ] = useState<EstablishmentListItemResponse | null>(
-      null
-    );
 
   const [
-      editingEstablishment,
-      setEditingEstablishment,
-    ] = useState<EstablishmentListItemResponse | null>(
-      null
-    );
+    cashRegistersOpen,
+    setCashRegistersOpen,
+  ] = useState(false);
+
+  const [
+    selectedCashRegisterEstablishment,
+    setSelectedCashRegisterEstablishment,
+  ] = useState<EstablishmentListItemResponse | null>(null);
+
+  const [
+    editingEstablishment,
+    setEditingEstablishment,
+  ] = useState<EstablishmentListItemResponse | null>(null);
+
   const [page, setPage] = useState(0);
 
-  const [createOpen, setCreateOpen] =
-    useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
 
-  const [filterForm, setFilterForm] =
-    useState<EstablishmentFilterValues>(
-      emptyFilters
-    );
+  const [filterForm, setFilterForm] = useState<EstablishmentFilterValues>(emptyFilters);
+  const [appliedFilters, setAppliedFilters] = useState<EstablishmentFilterValues>(emptyFilters);
 
-  const [appliedFilters, setAppliedFilters] =
-    useState<EstablishmentFilterValues>(
-      emptyFilters
-    );
+  function openAllCashRegisters() {
+    setSelectedCashRegisterEstablishment(null);
+    setCashRegistersOpen(true);
+  }
 
-    function openAllCashRegisters() {
-      setSelectedCashRegisterEstablishment(null);
-      setCashRegistersOpen(true);
-    }
+  function openEstablishmentCashRegisters(
+    establishment: EstablishmentListItemResponse
+  ) {
+    setSelectedCashRegisterEstablishment(establishment);
+    setCashRegistersOpen(true);
+  }
 
+  // 👇 NOVA FUNÇÃO: Redirecionar para Módulos
+  function openEstablishmentModules(establishment: EstablishmentListItemResponse) {
+    router.push(`/superadmin/modules/${establishment.id}`);
+  }
 
-    function openEstablishmentCashRegisters(
-      establishment: EstablishmentListItemResponse
-    ) {
-      setSelectedCashRegisterEstablishment(
-        establishment
+  const fetchEstablishments = useCallback(async () => {
+    try {
+      await loadEstablishments({
+        page,
+        size: PAGE_SIZE,
+        search: appliedFilters.search.trim() || null,
+        active:
+          appliedFilters.active === ""
+            ? null
+            : appliedFilters.active === "true",
+        businessTypeId: appliedFilters.businessTypeId || null,
+      });
+    } catch (error: any) {
+      showToast(
+        error?.message ||
+          "Não foi possível carregar os estabelecimentos.",
+        "error"
       );
-
-      setCashRegistersOpen(true);
     }
-  const fetchEstablishments =
-    useCallback(async () => {
-      try {
-        await loadEstablishments({
-          page,
-          size: PAGE_SIZE,
-          search:
-            appliedFilters.search.trim() || null,
-          active:
-            appliedFilters.active === ""
-              ? null
-              : appliedFilters.active === "true",
-          businessTypeId:
-            appliedFilters.businessTypeId || null,
-        });
-      } catch (error: any) {
-        showToast(
-          error?.message ||
-            "Não foi possível carregar os estabelecimentos.",
-          "error"
-        );
-      }
-    }, [
-      page,
-      appliedFilters,
-      loadEstablishments,
-      showToast,
-    ]);
+  }, [page, appliedFilters, loadEstablishments, showToast]);
 
-  const fetchBusinessTypes =
-    useCallback(async () => {
-      try {
-        await loadBusinessTypes(true);
-      } catch (error: any) {
-        showToast(
-          error?.message ||
-            "Não foi possível carregar os tipos de negócio.",
-          "error"
-        );
-      }
-    }, [
-      loadBusinessTypes,
-      showToast,
-    ]);
+  const fetchBusinessTypes = useCallback(async () => {
+    try {
+      await loadBusinessTypes(true);
+    } catch (error: any) {
+      showToast(
+        error?.message ||
+          "Não foi possível carregar os tipos de negócio.",
+        "error"
+      );
+    }
+  }, [loadBusinessTypes, showToast]);
 
   useEffect(() => {
     void fetchEstablishments();
@@ -223,7 +203,6 @@ export default function ListEstablishmentsPage() {
                   <p className="text-xs uppercase tracking-wide text-slate-400">
                     Total encontrado
                   </p>
-
                   <p className="text-2xl font-bold text-white">
                     {data?.totalElements || 0}
                   </p>
@@ -233,7 +212,6 @@ export default function ListEstablishmentsPage() {
                   <p className="text-xs uppercase tracking-wide text-slate-400">
                     Ativos nesta página
                   </p>
-
                   <p className="text-2xl font-bold text-emerald-400">
                     {activeOnCurrentPage}
                   </p>
@@ -251,14 +229,15 @@ export default function ListEstablishmentsPage() {
                 Cadastrar estabelecimento
               </button>
 
-                <button
-                  type="button"
-                  onClick={openAllCashRegisters}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
-                >
-                  <WalletCards size={18} />
-                  Caixas do sistema
-                </button>
+              <button
+                type="button"
+                onClick={openAllCashRegisters}
+                className="flex items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
+              >
+                <WalletCards size={18} />
+                Caixas do sistema
+              </button>
+              
               <button
                 type="button"
                 onClick={fetchEstablishments}
@@ -273,7 +252,6 @@ export default function ListEstablishmentsPage() {
                       : ""
                   }
                 />
-
                 Atualizar
               </button>
             </div>
@@ -294,7 +272,6 @@ export default function ListEstablishmentsPage() {
         {loading && establishments.length === 0 ? (
           <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
             <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600" />
-
             <p className="mt-4 text-sm text-slate-500">
               A carregar estabelecimentos...
             </p>
@@ -302,11 +279,9 @@ export default function ListEstablishmentsPage() {
         ) : establishments.length === 0 ? (
           <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
             <Building2 className="mx-auto h-12 w-12 text-slate-400" />
-
             <h3 className="mt-4 text-lg font-semibold text-slate-900">
               Nenhum estabelecimento encontrado
             </h3>
-
             <p className="mt-2 text-sm text-slate-500">
               Ajuste os filtros ou cadastre um novo estabelecimento.
             </p>
@@ -328,6 +303,7 @@ export default function ListEstablishmentsPage() {
                 onManageAdministrators={
                   setAdministratorEstablishment
                 }
+                onManageModules={openEstablishmentModules} // 👈 PASSADO AQUI
               />
               )
             )}
@@ -343,7 +319,6 @@ export default function ListEstablishmentsPage() {
           totalPages={data?.totalPages || 0}
           onPageChange={(newPage) => {
             setPage(newPage);
-
             window.scrollTo({
               top: 0,
               behavior: "smooth",
@@ -352,38 +327,40 @@ export default function ListEstablishmentsPage() {
         />
       </div>
 
-          <EditEstablishmentModal
-            establishment={editingEstablishment}
-            businessTypes={businessTypes}
-            onClose={() => setEditingEstablishment(null)}
-            onUpdated={async () => {
-              setEditingEstablishment(null);
-              await fetchEstablishments();
-            }}
-          />
+      <EditEstablishmentModal
+        establishment={editingEstablishment}
+        businessTypes={businessTypes}
+        onClose={() => setEditingEstablishment(null)}
+        onUpdated={async () => {
+          setEditingEstablishment(null);
+          await fetchEstablishments();
+        }}
+      />
 
-          <GlobalCashRegistersModal
-              open={cashRegistersOpen}
-              establishmentId={
-                selectedCashRegisterEstablishment?.id ||
-                null
-              }
-              establishmentName={
-                selectedCashRegisterEstablishment
-                  ?.tradeName || null
-              }
-              onClose={() => {
-                setCashRegistersOpen(false);
-                setSelectedCashRegisterEstablishment(
-                  null
-                );
-              }}
-            />
+      <GlobalCashRegistersModal
+        open={cashRegistersOpen}
+        establishmentId={
+          selectedCashRegisterEstablishment?.id ||
+          null
+        }
+        establishmentName={
+          selectedCashRegisterEstablishment
+            ?.tradeName || null
+        }
+        onClose={() => {
+          setCashRegistersOpen(false);
+          setSelectedCashRegisterEstablishment(
+            null
+          );
+        }}
+      />
+      
       <CreateEstablishmentModal
         open={createOpen}
         onClose={() => setCreateOpen(false)}
         onCreated={refreshAfterCreation}
       />
+      
       <ManageAdministratorsModal
         establishmentId={
           administratorEstablishment?.id || null

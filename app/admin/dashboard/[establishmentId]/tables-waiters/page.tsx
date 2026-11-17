@@ -3,13 +3,13 @@
 
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
 import { PlusIcon, PencilIcon, TrashIcon, TableCellsIcon, UserGroupIcon } from "@heroicons/react/24/outline";
-import { useTables } from "@/hooks/admin/useTables";
-import { useWaiters } from "@/hooks/admin/useWaiters";
-import { WaiterModal } from "@/components/admin/modals/WaiterModal";
-import { TableModal } from "@/components/admin/modals/TableModal";
+import { useTables } from "@/hooks/restaurant/admin/useTables";
+import { useWaiters } from "@/hooks/restaurant/admin/useWaiters";
+import { WaiterModal } from "@/components/restaurant/admin/modals/WaiterModal";
+import { TableModal } from "@/components/restaurant/admin/modals/TableModal";
 
 export default function TablesWaitersPage() {
   useRoleGuard([UserRole.ADMIN]);

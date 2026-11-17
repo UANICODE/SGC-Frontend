@@ -3,7 +3,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/auth/useAuth";
 import Image from "next/image";
 import Logo from "@/public/image/logo.png";
 import { validateLogin } from "@/utils/validators";
@@ -16,6 +15,7 @@ import {
   ArrowUpRight,
   Building2,
 } from "lucide-react";
+import { useAuth } from "@/shared/hooks/auth/useAuth";
 
 export default function LoginPage() {
   const { login } = useAuth();

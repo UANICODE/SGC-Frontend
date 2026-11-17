@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/hooks/auth/useAuth";
+import { useAuth } from "@/shared/hooks/auth/useAuth";
 import { useRouter } from "next/navigation";
 
 export default function SelectRolePage() {

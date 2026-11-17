@@ -6,18 +6,18 @@ import { useState } from "react";
 import { List, Plus, ArrowLeft, Download } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { useGeneralExpensesFilter } from "@/hooks/admin/cost/useGeneralExpensesFilter";
-import { useDeleteGeneralExpense } from "@/hooks/admin/cost/useDeleteGeneralExpense";
-import { useExportData } from "@/hooks/admin/cost/useExportData";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
-import { GeneralExpensesTable } from "@/components/admin/tables/GeneralExpensesTable";
-import { CreateGeneralExpenseModal } from "@/components/admin/modals/CreateGeneralExpenseModal";
-import { EditGeneralExpenseModal } from "@/components/admin/modals/EditGeneralExpenseModal";
-import { GeneralExpenseFilters } from "@/components/admin/GeneralExpenseFilters";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useGeneralExpensesFilter } from "@/hooks/restaurant/admin/cost/useGeneralExpensesFilter";
+import { useDeleteGeneralExpense } from "@/hooks/restaurant/admin/cost/useDeleteGeneralExpense";
+import { useExportData } from "@/hooks/restaurant/admin/cost/useExportData";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
+import { GeneralExpensesTable } from "@/components/restaurant/admin/tables/GeneralExpensesTable";
+import { CreateGeneralExpenseModal } from "@/components/restaurant/admin/modals/CreateGeneralExpenseModal";
+import { EditGeneralExpenseModal } from "@/components/restaurant/admin/modals/EditGeneralExpenseModal";
+import { GeneralExpenseFilters } from "@/components/restaurant/admin/GeneralExpenseFilters";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
 import { useToast } from "@/ context/ToastContext";
-import { ExportDataResponse } from "@/types/admin/cost";
+import { ExportDataResponse } from "@/types/restaurant/admin/cost";
 import { generateCostsPDF } from "@/utils/pdfGenerator";
 
 export default function GeneralExpensesPage() {

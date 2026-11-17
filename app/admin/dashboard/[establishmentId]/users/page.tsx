@@ -4,16 +4,16 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 
-import { CreateUserModal } from "@/components/admin/modals/CreateUserModal";
-import { ResetPasswordModal } from "@/components/admin/modals/ResetPasswordModal";
-import { UserTable } from "@/components/admin/tables/UserTable";
-import { UserFilters } from "@/components/admin/UserFilters";
+import { CreateUserModal } from "@/components/restaurant/admin/modals/CreateUserModal";
+import { ResetPasswordModal } from "@/components/restaurant/admin/modals/ResetPasswordModal";
+import { UserTable } from "@/components/restaurant/admin/tables/UserTable";
+import { UserFilters } from "@/components/restaurant/admin/UserFilters";
 
-import { ListUsersByEstablishmentResponse } from "@/types/admin/user";
-import { useUsers } from "@/hooks/admin/users/useUsers";
+import { ListUsersByEstablishmentResponse } from "@/types/restaurant/admin/user";
+import { useUsers } from "@/hooks/restaurant/admin/users/useUsers";
 import { useToast } from "@/ context/ToastContext";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { Users, Plus, Sparkles } from "lucide-react";
 
 export default function UsersPage() {

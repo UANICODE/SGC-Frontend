@@ -1,13 +1,13 @@
 "use client";
 
-import { updateEstablishment } from "@/service/admin/perfil/establishment";
+import { updateEstablishment } from "@/service/restaurant/admin/perfil/establishment";
 import { uploadProductImage } from "@/utils/uploadProductImage";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useToast } from "@/ context/ToastContext";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 
 export default function EstablishmentSettings() {

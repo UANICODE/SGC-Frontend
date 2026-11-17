@@ -4,14 +4,14 @@ import { useParams } from "next/navigation";
 import { useState, useMemo } from "react";
 import { Plus, Package, Sparkles } from "lucide-react";
 
-import { IngredientFilters } from "@/components/admin/IngredientFilters";
-import { IngredientItemResponse } from "@/types/admin/ingredients";
-import { useIngredients } from "@/hooks/admin/product/ingredient/useIngredients";
-import { IngredientModal } from "@/components/admin/modals/IngredientModal";
-import { IngredientsTable } from "@/components/admin/tables/IngredientsTable";
+import { IngredientFilters } from "@/components/restaurant/admin/IngredientFilters";
+import { IngredientItemResponse } from "@/types/restaurant/admin/ingredients";
+import { useIngredients } from "@/hooks/restaurant/admin/product/ingredient/useIngredients";
+import { IngredientModal } from "@/components/restaurant/admin/modals/IngredientModal";
+import { IngredientsTable } from "@/components/restaurant/admin/tables/IngredientsTable";
 import { useToast } from "@/ context/ToastContext";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 export default function IngredientsPage() {
   useRoleGuard([UserRole.ADMIN]);

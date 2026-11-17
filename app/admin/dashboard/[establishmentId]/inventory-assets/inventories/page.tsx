@@ -4,15 +4,15 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Plus, RefreshCw, Package, Eye, CheckCircle, AlertCircle } from "lucide-react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
-import { useInventories } from "@/hooks/admin/inventory/useInventories";
-import { useCreateInventory } from "@/hooks/admin/inventory/useCreateInventory";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
+import { useInventories } from "@/hooks/restaurant/admin/inventory/useInventories";
+import { useCreateInventory } from "@/hooks/restaurant/admin/inventory/useCreateInventory";
 import { useToast } from "@/ context/ToastContext";
-import { CreateInventoryModal } from "@/components/admin/modals/CreateInventoryModal";
-import { ReportButton } from "@/components/admin/ReportButton";
-import { useInventoriesReport } from "@/hooks/report/useInventoriesReport";
+import { CreateInventoryModal } from "@/components/restaurant/admin/modals/CreateInventoryModal";
+import { ReportButton } from "@/components/restaurant/admin/ReportButton";
+import { useInventoriesReport } from "@/hooks/restaurant/report/useInventoriesReport";
 import { generateInventoriesPDF } from "@/utils/pdfGenerator";
 
 

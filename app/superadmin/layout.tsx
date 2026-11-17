@@ -2,10 +2,11 @@
 "use client";
 
 
-import { SuperAdminNavbar } from "@/components/superadmin/layout/SuperAdminNavbar";
-import { SuperAdminSidebar } from "@/components/superadmin/layout/SuperAdminSidebar";
+import { SuperAdminNavbar } from "@/components/restaurant/superadmin/layout/SuperAdminNavbar";
+import { SuperAdminSidebar } from "@/components/restaurant/superadmin/layout/SuperAdminSidebar";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
+
 
 export default function SuperAdminLayout({
   children,

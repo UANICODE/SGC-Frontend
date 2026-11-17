@@ -2,8 +2,8 @@
 "use client";
 
 import { ReactNode } from "react";
-import { AuthProvider } from "@/hooks/auth/useAuth";
 import { ToastProvider } from "@/ context/ToastContext";
+import { AuthProvider } from "@/shared/hooks/auth/useAuth";
 
 
 export function ClientProviders({ children }: { children: ReactNode }) {

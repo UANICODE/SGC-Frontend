@@ -6,15 +6,15 @@ import { useState } from "react";
 import { Tag, Plus, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { useCostCategories } from "@/hooks/admin/cost/useCostCategories";
-import { useDeleteCostCategory } from "@/hooks/admin/cost/useDeleteCostCategory";
-import { CategoriesTable } from "@/components/admin/tables/CategoriesTable";
-import { CreateCostCategoryModal } from "@/components/admin/modals/CreateCostCategoryModal";
-import { EditCostCategoryModal } from "@/components/admin/modals/EditCostCategoryModal";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useCostCategories } from "@/hooks/restaurant/admin/cost/useCostCategories";
+import { useDeleteCostCategory } from "@/hooks/restaurant/admin/cost/useDeleteCostCategory";
+import { CategoriesTable } from "@/components/restaurant/admin/tables/CategoriesTable";
+import { CreateCostCategoryModal } from "@/components/restaurant/admin/modals/CreateCostCategoryModal";
+import { EditCostCategoryModal } from "@/components/restaurant/admin/modals/EditCostCategoryModal";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
 import { useToast } from "@/ context/ToastContext";
-import { useActivateCostCategory } from "@/hooks/admin/cost/useActivateCostCategory";
+import { useActivateCostCategory } from "@/hooks/restaurant/admin/cost/useActivateCostCategory";
 
 export default function CostCategoriesPage() {
     useRoleGuard([UserRole.ADMIN]);

@@ -4,16 +4,16 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Plus, RefreshCw, Tag, ArrowLeft, Edit, Trash2 } from "lucide-react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
-import { useAssetCategories } from "@/hooks/admin/asset/useAssetCategories";
-import { useCreateAssetCategory } from "@/hooks/admin/asset/useCreateAssetCategory";
-import { useUpdateAssetCategory } from "@/hooks/admin/asset/useUpdateAssetCategory";
-import { useDeleteAssetCategory } from "@/hooks/admin/asset/useDeleteAssetCategory";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
+import { useAssetCategories } from "@/hooks/restaurant/admin/asset/useAssetCategories";
+import { useCreateAssetCategory } from "@/hooks/restaurant/admin/asset/useCreateAssetCategory";
+import { useUpdateAssetCategory } from "@/hooks/restaurant/admin/asset/useUpdateAssetCategory";
+import { useDeleteAssetCategory } from "@/hooks/restaurant/admin/asset/useDeleteAssetCategory";
 import { useToast } from "@/ context/ToastContext";
-import { CreateAssetCategoryModal } from "@/components/admin/modals/CreateAssetCategoryModal";
-import { EditAssetCategoryModal } from "@/components/admin/modals/EditAssetCategoryModal";
+import { CreateAssetCategoryModal } from "@/components/restaurant/admin/modals/CreateAssetCategoryModal";
+import { EditAssetCategoryModal } from "@/components/restaurant/admin/modals/EditAssetCategoryModal";
 
 export default function AssetCategoriesPage() {
     useRoleGuard([UserRole.ADMIN]);

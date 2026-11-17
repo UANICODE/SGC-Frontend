@@ -4,19 +4,19 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Plus, RefreshCw, Box, Edit, Trash2, Wrench, AlertTriangle, Filter } from "lucide-react";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { useEstablishment } from "@/hooks/admin/useEstablishment";
-import { useAssets } from "@/hooks/admin/asset/useAssets";
-import { useAssetCategories } from "@/hooks/admin/asset/useAssetCategories";
-import { useCreateAsset } from "@/hooks/admin/asset/useCreateAsset";
+import { useEstablishment } from "@/hooks/restaurant/admin/useEstablishment";
+import { useAssets } from "@/hooks/restaurant/admin/asset/useAssets";
+import { useAssetCategories } from "@/hooks/restaurant/admin/asset/useAssetCategories";
+import { useCreateAsset } from "@/hooks/restaurant/admin/asset/useCreateAsset";
 import { useToast } from "@/ context/ToastContext";
-import { CreateAssetModal } from "@/components/admin/modals/CreateAssetModal";
-import { EditAssetModal } from "@/components/admin/modals/EditAssetModal";;
-import { RegisterMaintenanceModal } from "@/components/admin/modals/RegisterMaintenanceModal";
-import { DisposeAssetModal } from "@/components/admin/modals/DisposeAssetModal";
-import { useAssetsReport } from "@/hooks/report/useAssetsReport";
-import { ReportButton } from "@/components/admin/ReportButton";
+import { CreateAssetModal } from "@/components/restaurant/admin/modals/CreateAssetModal";
+import { EditAssetModal } from "@/components/restaurant/admin/modals/EditAssetModal";;
+import { RegisterMaintenanceModal } from "@/components/restaurant/admin/modals/RegisterMaintenanceModal";
+import { DisposeAssetModal } from "@/components/restaurant/admin/modals/DisposeAssetModal";
+import { useAssetsReport } from "@/hooks/restaurant/report/useAssetsReport";
+import { ReportButton } from "@/components/restaurant/admin/ReportButton";
 import { generateAssetsPDF } from "@/utils/pdfGenerator";
 
 export default function AssetsPage() {

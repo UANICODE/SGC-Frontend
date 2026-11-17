@@ -6,14 +6,14 @@ import { useState } from "react";
 import { Wallet, TrendingUp, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { useCostDashboard } from "@/hooks/admin/cost/useCostDashboard";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useCostDashboard } from "@/hooks/restaurant/admin/cost/useCostDashboard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 import { UserRole } from "@/enum/enum";
-import { CostDashboardCards } from "@/components/admin/cards/CostDashboardCards";
-import { CostByCategoryChart } from "@/components/admin/CostByCategoryChart";
-import { CostByPeriodChart } from "@/components/admin/CostByPeriodChart";
-import { MonthlyEvolutionChart } from "@/components/admin/MonthlyEvolutionChart";
-import { TopCategoriesList } from "@/components/admin/TopCategoriesList";
+import { CostDashboardCards } from "@/components/restaurant/admin/cards/CostDashboardCards";
+import { CostByCategoryChart } from "@/components/restaurant/admin/CostByCategoryChart";
+import { CostByPeriodChart } from "@/components/restaurant/admin/CostByPeriodChart";
+import { MonthlyEvolutionChart } from "@/components/restaurant/admin/MonthlyEvolutionChart";
+import { TopCategoriesList } from "@/components/restaurant/admin/TopCategoriesList";
 
 export default function CostsPage() {
     useRoleGuard([UserRole.ADMIN]);

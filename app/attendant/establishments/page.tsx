@@ -3,11 +3,11 @@
 
 import { useRef, useState } from "react";
 
-import { useAttendantEstablishments } from "@/hooks/attendant/useAttendantEstablishments";
-import { EstablishmentCard } from "@/components/attendant/cards/EstablishmentCard";
+import { useAttendantEstablishments } from "@/hooks/restaurant/attendant/useAttendantEstablishments";
+import { EstablishmentCard } from "@/components/restaurant/attendant/cards/EstablishmentCard";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { UserRole } from "@/enum/enum";
-import { useRoleGuard } from "@/hooks/auth/useRoleGuard";
+import { useRoleGuard } from "@/shared/hooks/auth/useRoleGuard";
 
 import {
   Activity,

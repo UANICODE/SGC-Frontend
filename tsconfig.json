@@ -41,7 +41,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "hooks/admin /product/stock/useStockMovements",
-    "service/admin/superProduct.ts"
+    "service/restaurant/admin/superProduct.ts"
   ],
   "exclude": [
     "node_modules"

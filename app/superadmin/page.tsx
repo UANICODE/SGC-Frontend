@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuperAdminDashboard } from "@/hooks/superadmin/useSuperAdminDashboard";
+import { useSuperAdminDashboard } from "@/hooks/restaurant/superadmin/useSuperAdminDashboard";
 
 export default function SuperAdminDashboardPage() {
   const {

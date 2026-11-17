@@ -1,8 +1,8 @@
 // providers/EstablishmentBlockProvider.tsx
 "use client";
 
-import { BlockWarningPopup } from "@/components/payments/BlockWarningPopup";
-import { useBlockWarning } from "@/hooks/payments/useBlockWarning";
+import { BlockWarningPopup } from "@/components/restaurant/payments/BlockWarningPopup";
+import { useBlockWarning } from "@/hooks/restaurant/payments/useBlockWarning";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
